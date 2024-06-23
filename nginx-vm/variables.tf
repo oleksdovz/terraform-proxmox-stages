@@ -46,10 +46,10 @@ variable "vm_id" {
   type        = number
 }
 
-variable "list_public_key_openssh" {
-  description = "List of ssh public keys"
-  type = list(string)
-  default = []
+variable "ssh_public_key" {
+  description = "ssh public key"
+  type = string
+  default = ""
 }
 
 variable "custom_script" {
@@ -96,12 +96,12 @@ variable "vm_networking" {
   default     = {
     0 : {
       bridge  = "vmbr0"
-      address = "192.168.0.23/24"
+      address = "192.168.0.26/24"
       gateway = "192.168.0.1"
     },
     "1" : {
       bridge  = "vmbr100"
-      address = "192.168.100.23/24"
+      address = "192.168.100.26/24"
       gateway = "192.168.100.1"
     }
   }
