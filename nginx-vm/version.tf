@@ -7,14 +7,13 @@ terraform {
   }
 }
 
+provider "proxmox" {
+  endpoint = var.proxmox_endpoint
+  username = var.proxmox_username
+  password = var.proxmox_password
+  insecure = var.proxmox_insecure
 
-# provider "proxmox" {
-#   endpoint = "https://x.x.x.x:8006/"
-#   username = "root@pam"
-#   password = "XXXXXXXXXXXXXX"
-#   insecure = true
-#
-#   ssh {
-#     agent = true
-#   }
-# }
+  ssh {
+    agent = var.proxmox_ssh_agent
+  }
+}

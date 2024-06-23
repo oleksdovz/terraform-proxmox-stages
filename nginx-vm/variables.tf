@@ -1,3 +1,28 @@
+variable "proxmox_endpoint" {
+  description = "Proxmox Host of VM, ex https://x.x.x.x:8006/ "
+  type        = string
+}
+
+variable "proxmox_username" {
+  description = "Proxmox Host username, ex root@pam"
+  type        = string
+}
+
+variable "proxmox_password" {
+  description = "Proxmox Host password"
+  type        = string
+}
+variable "proxmox_insecure" {
+  description = "Proxmox Host insecure connection"
+  type        = string
+}
+variable "proxmox_ssh_agent" {
+  description = "Proxmox Host insecure connection"
+  type        = bool
+  default     = false
+}
+
+####
 variable "node_name" {
   description = "Proxmox node(Host) of VM"
   type        = string
@@ -48,8 +73,8 @@ variable "vm_id" {
 
 variable "ssh_public_key" {
   description = "ssh public key"
-  type = string
-  default = ""
+  type        = string
+  default     = ""
 }
 
 variable "custom_script" {
@@ -83,8 +108,8 @@ variable "vm_dns_domain" {
 }
 variable "vm_dns_servers" {
   description = "vm_dns_domain parameters for VM"
-  type        = list(string)
-  default     = [
+  type = list(string)
+  default = [
     "192.168.0.2",
     "192.168.0.1"
   ]
@@ -92,8 +117,8 @@ variable "vm_dns_servers" {
 
 variable "vm_networking" {
   description = "vm_networking parameters for VM"
-  type        = map(any)
-  default     = {
+  type = map(any)
+  default = {
     0 : {
       bridge  = "vmbr0"
       address = "192.168.0.26/24"
@@ -106,7 +131,6 @@ variable "vm_networking" {
     }
   }
 }
-
 
 variable "vm_memory" {
   description = "vm_memory parameters for VM"
