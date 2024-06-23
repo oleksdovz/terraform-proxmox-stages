@@ -1,0 +1,7 @@
+.idea
+.idea/**
+provider.tf
+**/provider.tf
+.terraform
+.terraform/**
+**/.terraform
