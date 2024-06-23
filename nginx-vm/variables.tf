@@ -14,7 +14,8 @@ variable "proxmox_password" {
 }
 variable "proxmox_insecure" {
   description = "Proxmox Host insecure connection"
-  type        = string
+  type        = bool
+  default     = true
 }
 variable "proxmox_ssh_agent" {
   description = "Proxmox Host insecure connection"
