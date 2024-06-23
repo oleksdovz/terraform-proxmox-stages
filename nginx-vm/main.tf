@@ -2,7 +2,7 @@ data "local_file" "key" {
   filename = pathexpand("~/.ssh/id_rsa.pub")
 }
 
-# locals {
+locals {
 #   vm_name      = "nginx-vm"
 #   vm_id        = "12312"
 #   vm_username  = "myadmin"
@@ -21,8 +21,8 @@ data "local_file" "key" {
 #     "192.168.0.2",
 #     "192.168.0.1"
 #   ]
-#   custom_script = "apt update; apt install -yq nginx && systemctl enable nginx && systemctl restart nginx"
-# }
+  custom_script = "apt update; apt install -yq nginx && systemctl enable nginx && systemctl restart nginx"
+}
 
 module "vms" {
   source         = "git@github.com:oleksdovz/terraform-proxmox-modules.git//proxmox-vm?ref=main"
@@ -35,5 +35,5 @@ module "vms" {
   vm_networking  = var.vm_networking
   vm_dns_servers = var.vm_dns_servers
   ssh_public_key = data.local_file.key.content
-  custom_script  = var.custom_script
+  custom_script  = local.custom_script
 }
