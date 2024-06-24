@@ -37,18 +37,23 @@ locals {
   remote_ip = replace(var.vm_networking.0["address"], "/24", "")
 }
 
-data "remotefile" "bar" {
+provider "remote" {
+  max_sessions = 2
   conn {
     host     = local.remote_ip
-    port     = 22
-    username = var.vm_username
+    user     = var.vm_username
     password = var.vm_password
+    sudo     = true
   }
-  path = "/etc/rancher/k3s/config.yaml"
 }
 
 
+data "remote_file" "config" {
+
+  path = "/etc/rancher/k3s/config.yaml"
+}
+
 output "k3s_config" {
-  value = data.remotefile.bar.id
+  value = data.remote_file.config.content
   sensitive = false
 }

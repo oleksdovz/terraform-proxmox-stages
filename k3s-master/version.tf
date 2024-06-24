@@ -4,9 +4,9 @@ terraform {
       source  = "bpg/proxmox"
       version = "0.60.0"
     }
-    remotefile = {
-      source = "mabunixda/remotefile"
-      version = "0.1.1"
+    remote = {
+      source = "tenstad/remote"
+      version = "0.1.3"
     }
   }
 }
@@ -21,3 +21,4 @@ provider "proxmox" {
     agent = var.proxmox_ssh_agent
   }
 }
+
