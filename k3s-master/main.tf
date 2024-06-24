@@ -52,7 +52,7 @@ module "k3s-master" {
   source         = "git@github.com:oleksdovz/terraform-proxmox-modules.git//k3s-master?ref=main"
   ssh_public_key = data.local_file.ssh_public_key.content
   vm_username    = var.vm_username
-  vm_networking  = local.remote_ip
+  remote_ip      = local.remote_ip
 
   depends_on = [
     module.vms,
