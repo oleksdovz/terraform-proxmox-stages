@@ -13,3 +13,7 @@ output "config" {
   value = module.k3s-master.k3s_config
 }
 
+resource "local_file" "config" {
+  content  = module.k3s-master.k3s_config
+  filename = "${path.module}/config"
+}

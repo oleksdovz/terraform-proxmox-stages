@@ -63,9 +63,3 @@ module "k3s-master" {
     time_sleep.wait_30_seconds
   ]
 }
-
-
-resource "local_file" "foo" {
-  content  = module.k3s-master.config
-  filename = "${path.module}/config"
-}
