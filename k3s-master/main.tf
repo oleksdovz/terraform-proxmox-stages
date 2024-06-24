@@ -39,21 +39,27 @@ locals {
 
 provider "remote" {
   max_sessions = 2
+}
+
+
+data "remote_file" "config" {
   conn {
     host     = local.remote_ip
     user     = var.vm_username
     password = var.vm_password
     sudo     = true
   }
-}
-
-
-data "remote_file" "config" {
-
   path = "/etc/rancher/k3s/config.yaml"
+  depends_on = [ module.vms]
 }
+
 
 output "k3s_config" {
   value = data.remote_file.config.content
+  sensitive = false
+}
+
+output "ip" {
+  value = local.remote_ip
   sensitive = false
 }
