@@ -42,30 +42,20 @@ locals {
 }
 
 resource "time_sleep" "wait_30_seconds" {
-  depends_on = [module.vms]
   create_duration = "30s"
+  depends_on = [
+    module.vms
+  ]
 }
 
-data "remote_file" "config" {
-  conn {
-    host     = local.remote_ip
-    user     = var.vm_username
-    private_key = data.local_file.ssh_private_key.content
-    sudo     = true
-  }
-  path = "/etc/rancher/k3s/k3s.yaml"
+module "k3s-master" {
+  source         = "git@github.com:oleksdovz/terraform-proxmox-modules.git//k3s-master?ref=main"
+  ssh_public_key = data.local_file.ssh_public_key.content
+  vm_username    = var.vm_username
+  vm_networking  = local.remote_ip
+
   depends_on = [
     module.vms,
     time_sleep.wait_30_seconds
   ]
-}
-
-output "k3s_config" {
-  value = data.remote_file.config.content
-  sensitive = false
-}
-
-output "ip" {
-  value = local.remote_ip
-  sensitive = false
 }
