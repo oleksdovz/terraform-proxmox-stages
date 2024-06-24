@@ -75,7 +75,6 @@ variable "vm_id" {
 variable "ssh_public_key" {
   description = "ssh public key"
   type        = string
-  default     = ""
 }
 
 variable "custom_script" {
