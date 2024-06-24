@@ -2,7 +2,6 @@ data "local_file" "key" {
   filename = pathexpand("${var.ssh_public_key}")
 }
 
-
 module "vms" {
   source                = "git@github.com:oleksdovz/terraform-proxmox-modules.git//proxmox-vm?ref=main"
   ssh_public_key        = data.local_file.key.content
@@ -31,5 +30,4 @@ module "vms" {
   vm_cpu_type           = var.vm_cpu_type
   vm_disk_size          = var.vm_disk_size
   vm_os_config          = var.vm_os_config
-
 }
