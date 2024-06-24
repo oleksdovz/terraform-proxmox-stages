@@ -36,9 +36,14 @@ module "vms" {
   vm_os_config          = var.vm_os_config
 }
 
-
+###
 locals {
   remote_ip = replace(var.vm_networking.0["address"], "/24", "")
+}
+
+resource "time_sleep" "wait_30_seconds" {
+  depends_on = [module.vms]
+  create_duration = "30s"
 }
 
 data "remote_file" "config" {
@@ -49,9 +54,11 @@ data "remote_file" "config" {
     sudo     = true
   }
   path = "/etc/rancher/k3s/config.yaml"
-  depends_on = [ module.vms]
+  depends_on = [
+    module.vms,
+    time_sleep.wait_30_seconds
+  ]
 }
-
 
 output "k3s_config" {
   value = data.remote_file.config.content
