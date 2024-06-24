@@ -3,6 +3,10 @@ terraform {
     proxmox = {
       source  = "bpg/proxmox"
       version = "0.60.0"
+    },
+    remotefile = {
+      source = "mabunixda/remotefile"
+      version = "0.1.1"
     }
   }
 }

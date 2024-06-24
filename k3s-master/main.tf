@@ -37,24 +37,18 @@ locals {
   remote_ip = replace(var.vm_networking.0["address"], "/24", "")
 }
 
-data "null_data_source" "get_k3s_config" {
-  connection {
-    host = local.remote_ip
-    user = var.vm_username
+data "remotefile" "bar" {
+  conn {
+    host     = local.remote_ip
+    port     = 22
+    username = var.vm_username
     password = var.vm_password
   }
-
-  provisioner "remote-exec" {
-    inline_script = <<EOF
-      cat /etc/rancher/k3s/config.yaml
-    EOF
-
-    stdout_file = "k3s_config_${count.index}.yaml"
-  }
-  depends_on = [ module.vms]
+  path = "/etc/rancher/k3s/config.yaml"
 }
 
+
 output "k3s_config" {
-  value = data.null_data_source.get_k3s_config.stdout_file
-  sensitive = true
+  value = data.remotefile.bar.id
+  sensitive = false
 }
