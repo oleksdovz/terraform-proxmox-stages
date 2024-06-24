@@ -50,7 +50,7 @@ data "local_file" "ssh_private_key" {
 
 module "k3s-master" {
   source         = "git@github.com:oleksdovz/terraform-proxmox-modules.git//k3s-master?ref=main"
-  ssh_private_key = data.local_file.ssh_private_key
+  ssh_private_key = data.local_file.ssh_private_key.content
   vm_username    = var.vm_username
   remote_ip      = local.remote_ip
 
