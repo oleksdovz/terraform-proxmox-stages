@@ -53,7 +53,7 @@ data "remote_file" "config" {
     private_key = data.local_file.ssh_private_key.content
     sudo     = true
   }
-  path = "/etc/rancher/k3s/config.yaml"
+  path = "/etc/rancher/k3s/k3s.yaml"
   depends_on = [
     module.vms,
     time_sleep.wait_30_seconds
