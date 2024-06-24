@@ -48,7 +48,7 @@ locals {
 resource "time_sleep" "wait_30_seconds" {
   create_duration = "30s"
   depends_on = [
-    module.vms
+    module.master-vm
   ]
 }
 
