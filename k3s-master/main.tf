@@ -2,6 +2,10 @@ data "local_file" "ssh_public_key" {
   filename = pathexpand("${var.ssh_public_key}")
 }
 
+locals {
+  k3s_custom_script = "apt update && apt install -yq nfs-common htop curl  && curl -sfL https://get.k3s.io | sh - && apt upgrade -yq"
+}
+
 module "vms" {
   source                = "git@github.com:oleksdovz/terraform-proxmox-modules.git//proxmox-vm?ref=main"
   ssh_public_key        = data.local_file.ssh_public_key.content
@@ -14,7 +18,7 @@ module "vms" {
   vm_password           = var.vm_password
   vm_name               = var.vm_name
   vm_id                 = var.vm_id
-  custom_script         = var.custom_script
+  custom_script         = local.k3s_custom_script
   vm_startup_order      = var.vm_startup_order
   vm_startup_up_delay   = var.vm_startup_up_delay
   vm_startup_down_delay = var.vm_startup_down_delay
