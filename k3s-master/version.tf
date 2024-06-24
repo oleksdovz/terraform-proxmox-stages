@@ -5,7 +5,7 @@ terraform {
       version = "0.60.0"
     }
     remote = {
-      source = "tenstad/remote"
+      source  = "tenstad/remote"
       version = "0.1.3"
     }
   }
@@ -22,3 +22,6 @@ provider "proxmox" {
   }
 }
 
+provider "remote" {
+  max_sessions = 2
+}

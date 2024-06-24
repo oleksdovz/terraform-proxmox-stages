@@ -83,6 +83,11 @@ variable "ssh_public_key" {
   type        = string
 }
 
+variable "ssh_private_key" {
+  description = "ssh private key"
+  type        = string
+}
+
 variable "custom_script" {
   description = "custom_script for cloudinit, bash one line script"
   type        = string
