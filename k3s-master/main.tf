@@ -2,11 +2,15 @@ data "local_file" "ssh_public_key" {
   filename = pathexpand("${var.ssh_public_key}")
 }
 
-locals {
-  k3s_custom_script = "apt update && apt install -yq nfs-common htop curl  && curl -sfL https://get.k3s.io | sh - && apt upgrade -yq"
+data "local_file" "ssh_private_key" {
+  filename = pathexpand("${var.ssh_private_key}")
 }
 
-module "vms" {
+locals {
+  k3s_custom_script = "apt update && apt install -yq nfs-common htop curl  && curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC='--disable traefik' sh - && apt upgrade -yq"
+}
+
+module "master-vm" {
   source                = "git@github.com:oleksdovz/terraform-proxmox-modules.git//proxmox-vm?ref=main"
   ssh_public_key        = data.local_file.ssh_public_key.content
   node_name             = var.node_name
@@ -48,18 +52,14 @@ resource "time_sleep" "wait_30_seconds" {
   ]
 }
 
-data "local_file" "ssh_private_key" {
-  filename = pathexpand("${var.ssh_private_key}")
-}
-
 module "k3s-master" {
-  source         = "git@github.com:oleksdovz/terraform-proxmox-modules.git//k3s-master?ref=main"
+  source          = "git@github.com:oleksdovz/terraform-proxmox-modules.git//k3s-master?ref=main"
   ssh_private_key = data.local_file.ssh_private_key.content
-  vm_username    = var.vm_username
-  remote_ip      = local.remote_ip
+  vm_username     = var.vm_username
+  remote_ip       = local.remote_ip
 
   depends_on = [
-    module.vms,
+    module.master-vm,
     time_sleep.wait_30_seconds
   ]
 }
