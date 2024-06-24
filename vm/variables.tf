@@ -24,6 +24,12 @@ variable "proxmox_ssh_agent" {
 }
 
 ####
+variable "environment" {
+  description = "environment tag"
+  type        = string
+  default     = "proxmox"
+}
+
 variable "node_name" {
   description = "Proxmox node(Host) of VM"
   type        = string
