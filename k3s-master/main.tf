@@ -50,7 +50,7 @@ resource "time_sleep" "wait_30_seconds" {
 
 module "k3s-master" {
   source         = "git@github.com:oleksdovz/terraform-proxmox-modules.git//k3s-master?ref=main"
-  ssh_public_key = data.local_file.ssh_public_key.content
+  ssh_private_key = data.local_file.ssh_public_key.content
   vm_username    = var.vm_username
   remote_ip      = local.remote_ip
 
