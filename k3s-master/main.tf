@@ -2,10 +2,6 @@ data "local_file" "ssh_public_key" {
   filename = pathexpand("${var.ssh_public_key}")
 }
 
-data "local_file" "ssh_private_key" {
-  filename = pathexpand("${var.ssh_private_key}")
-}
-
 module "vms" {
   source                = "git@github.com:oleksdovz/terraform-proxmox-modules.git//proxmox-vm?ref=main"
   ssh_public_key        = data.local_file.ssh_public_key.content
@@ -46,6 +42,10 @@ resource "time_sleep" "wait_30_seconds" {
   depends_on = [
     module.vms
   ]
+}
+
+data "local_file" "ssh_private_key" {
+  filename = pathexpand("${var.ssh_private_key}")
 }
 
 module "k3s-master" {
