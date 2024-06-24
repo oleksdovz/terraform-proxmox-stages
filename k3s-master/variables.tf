@@ -85,7 +85,7 @@ variable "ssh_public_key" {
 
 variable "ssh_private_key" {
   description = "ssh private key"
-  type        = string
+  type        = any
 }
 
 variable "custom_script" {
